@@ -142,7 +142,11 @@ function calcScore(actual, guess) {
 	for (x = 0; x<actual.length; x++) {
 		sumSquares += Math.pow(actual[x]-guess[x], 2);	
 	}
-	
-    score = Math.round(1000/Math.sqrt(sumSquares));
-	return score;
+    
+    maxdiff = 128^2*3;
+    mindiff = 0;
+    
+    percentmax = Math.sqrt(sumSquares)/maxdiff
+    scaledScore = Math.round(1000/(percentmax+1)); 
+	return scaledScore;
 }
