@@ -1,5 +1,6 @@
 <html>
 <head><title>Midpoint</title></head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 <body onload="draw('#000000');">
    <link rel="stylesheet" href="gamestyles.css">
    <script src="gamescripts.js"></script>
@@ -33,11 +34,13 @@
                 If you're reading this it means I don't know how to display this part of the game in your browser. And also this game won't be much fun.
     </canvas>
 	
-    <button class="donebutton" onclick="displayResults()">Done!</button>
-    <div id="resultText">		</div>
-    <canvas id="resultColor"></canvas>
-    <div id="scoreText">			</div>
-    <div id="score">	</div>
+    <div id="results">
+        <button class="donebutton" onclick="displayResults()">Done!</button>
+        <div id="resultText">		</div>
+        <canvas id="resultColor"></canvas>
+        <div id="scoreText">			</div>
+        <div id="score">	</div>
+    </div>
 	
 </body>
 </html>

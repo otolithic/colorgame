@@ -34,6 +34,8 @@ for (x = 0; x < randocolor1.length; x++) {
 
 //populate the hex names and colors generated
 function draw() {
+    sliderSet();
+    
   var canvas1 = document.getElementById("colorboxes");
   var h = canvas1.height;
   if (canvas1.getContext) {
@@ -61,6 +63,16 @@ function draw() {
 }
 
 //set sliders to 0
+function sliderSet() {
+    var form = document.getElementById("colorpicker");
+    var red = form.elements["red"];
+	var green = form.elements["green"];
+	var blue = form.elements["blue"];
+    
+    red.value = 0;
+    green.value=0;
+    blue.value=0;
+}
 	
 function getHexColor(r, g, b) {
 	var guesshex= "#";
@@ -143,6 +155,8 @@ function calcScore(actual, guess) {
 		sumSquares += Math.pow(actual[x]-guess[x], 2);	
 	}
 	
+    
+    
     score = Math.round(1000/Math.sqrt(sumSquares));
 	return score;
 }
