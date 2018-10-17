@@ -1,41 +1,46 @@
-var randocolor1 =[Math.floor(Math.random()*256), Math.floor(Math.random()*256), Math.floor(Math.random()*256)];
-var randocolor2 =[Math.floor(Math.random()*256), Math.floor(Math.random()*256), Math.floor(Math.random()*256)];		
-var middlecolor = [0,0,0];
-var MIN_DIFFERENCE = 20;
-		
-//prevent too similar colors		
-for (x = 0; x < randocolor1.length; x++) {
-    while (Math.abs(randocolor1[x] - randocolor2[x]) < MIN_DIFFERENCE)
-        {randocolor1[x] = Math.floor(Math.random()*256);}		
-}
+function makeRandomColors() {
+    var randocolor1 =[Math.floor(Math.random()*256), Math.floor(Math.random()*256), Math.floor(Math.random()*256)];
+    var randocolor2 =[Math.floor(Math.random()*256), Math.floor(Math.random()*256), Math.floor(Math.random()*256)];		
+    var middlecolor = [0,0,0];
+    var MIN_DIFFERENCE = 20;
 
-for (x = 0; x < middlecolor.length; x++) {
-    co = (randocolor1[x]-randocolor2[x])/2 + randocolor2[x];
-    co = Math.abs(Math.floor(co));
-    middlecolor[x] = co;	
-}
+    //prevent too similar colors		
+    for (x = 0; x < randocolor1.length; x++) {
+        while (Math.abs(randocolor1[x] - randocolor2[x]) < MIN_DIFFERENCE)
+            {randocolor1[x] = Math.floor(Math.random()*256);}		
+    }
 
-var hexcolor = ["#", "#", "#"];
-//convert these rgb values to hex. [0] and [1] are the two colors and [2] is between them
-for (x = 0; x < randocolor1.length; x++) {
-    var hex = [randocolor1[x].toString(16), randocolor2[x].toString(16), middlecolor[x].toString(16)];		
+    for (x = 0; x < middlecolor.length; x++) {
+        co = (randocolor1[x]-randocolor2[x])/2 + randocolor2[x];
+        co = Math.abs(Math.floor(co));
+        middlecolor[x] = co;	
+    }
 
-    for (y = 0; y < hex.length; y++) {
-        if (hex[y].length == 1) {
-            hex[y] = "0" + hex[y];	
+    var hexcolor = ["#", "#", "#"];
+    //convert these rgb values to hex. [0] and [1] are the two colors and [2] is between them
+    for (x = 0; x < randocolor1.length; x++) {
+        var hex = [randocolor1[x].toString(16), randocolor2[x].toString(16), middlecolor[x].toString(16)];		
+
+        for (y = 0; y < hex.length; y++) {
+            if (hex[y].length == 1) {
+                hex[y] = "0" + hex[y];	
+            }
+        }
+
+        for (z = 0; z < hexcolor.length; z++) {
+            hexcolor[z] = hexcolor[z].concat(hex[z]);		
         }
     }
-
-    for (z = 0; z < hexcolor.length; z++) {
-        hexcolor[z] = hexcolor[z].concat(hex[z]);		
-    }
+    return hexcolor;
+    
 }
 
+initColors = makeRandomColors();
 
 //populate the hex names and colors generated
 function draw() {
     sliderSet();
-    
+    hexcolor = initColors;
   var canvas1 = document.getElementById("colorboxes");
   var h = canvas1.height;
   if (canvas1.getContext) {
@@ -129,7 +134,9 @@ function updateColor() {
 
 function displayResults() {
 	var rgb = getRGB();
-	var answer = getHexColor(middlecolor[0],middlecolor[1],middlecolor[2]);
+	var answer = initColors[2];
+    var answerToRgb = hexToRgb(answer);
+    var middlecolor = [answerToRgb.r,answerToRgb.g,answerToRgb.b];
 	var guess = getHexColor(rgb[0],rgb[1],rgb[2]);
 	var resultText = document.getElementById("resultText");
 	var resultColor = document.getElementById("resultColor");
@@ -147,6 +154,21 @@ function displayResults() {
 	scoreText.innerHTML = "You guessed " + guess + ".<br>The max score is 1000. Your score is: ";
 	score.style.display = "block";	
 	score.innerHTML = calcScore(middlecolor, rgb);
+    
+    displayNewSquares();
+}
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function displayNewSquares() {
+    
 }
 
 function calcScore(actual, guess) {

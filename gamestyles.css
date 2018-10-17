@@ -73,6 +73,6 @@ input[type=range]::-moz-range-track {
 }
 
 
-#colorboxes {
+#colorboxes, #colorboxes2 {
     width: 70%;
 }
