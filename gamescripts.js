@@ -173,14 +173,15 @@ function displayNewSquares() {
 
 function calcScore(actual, guess) {
 	var sumSquares = 0;
+    console.log(actual,guess)
 	for (x = 0; x<actual.length; x++) {
 		sumSquares += Math.pow(actual[x]-guess[x], 2);	
 	}
-    
-    maxdiff = 128^2*3;
+    playerdiff = Math.sqrt(sumSquares)
+    maxdiff = Math.sqrt(Math.pow(255,2)*3);
     mindiff = 0;
     
-    percentmax = Math.sqrt(sumSquares)/maxdiff
-    scaledScore = Math.round(1000/(percentmax+1)); 
+    percentmax = playerdiff/maxdiff;
+    scaledScore = 1000-Math.round(1000*percentmax); 
 	return scaledScore;
 }
