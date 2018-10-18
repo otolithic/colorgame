@@ -27,10 +27,14 @@ input{
     margin:10px;
 }
 
+output{
+    display:none;
+}
+
 
 input[type=range] {
   -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
-  width: 400; /* Specific width is required for Firefox. */
+  width: 300px; /* Specific width is required for Firefox. */
   background: transparent; /* Otherwise white in Chrome */
 }
 
@@ -63,7 +67,7 @@ input[type=range]::-moz-range-thumb {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-  width: 100%;
+  width: inherit;
   height: 8.4px;
   cursor: pointer;
   border-radius: 1.3px;
